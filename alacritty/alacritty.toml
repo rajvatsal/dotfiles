@@ -1,0 +1,22 @@
+[window]
+opacity = 0.90
+blur = true
+
+[font]
+size = 10.0
+
+[font.normal]
+family = 'FantasqueSansM Nerd Font'
+style = 'Regular'
+
+[font.bold]
+family = 'FantasqueSansM Nerd Font'
+style = 'Bold'
+
+[colors.primary]
+background = '#111318'
+
+[keyboard]
+bindings = [
+{ key = "F11", action = "ToggleFullscreen" }
+]
