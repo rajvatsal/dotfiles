@@ -1,0 +1,18 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Debugger",
+		"Formatter",
+		"Git",
+		"Materialize",
+		"Package Control",
+		"SublimeLinter",
+		"SublimeLinter-contrib-clang-tidy",
+		"Terminus",
+		"Theme - Adaptify",
+	],
+}

@@ -1,0 +1,17 @@
+[
+  { "keys": ["ctrl+t"], "command": "toggle_side_bar" },
+  { "keys": ["ctrl+b"], "command": "build" },
+  {
+    "keys": ["ctrl+`"],
+    "command": "toggle_terminus_panel",
+    "args": {
+      "cwd": "${file_path: ${folder}}",
+    },
+  },
+  {
+    "keys": ["alt+`"],
+    "command": "show_panel",
+    "args": { "panel": "console", "toggle": true },
+  },
+  { "keys": ["ctrl+e"], "command": "close_file" },
+]

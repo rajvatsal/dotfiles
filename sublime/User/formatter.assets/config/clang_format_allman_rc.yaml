@@ -1,0 +1,7 @@
+---
+BasedOnStyle:  LLVM
+AlignAfterOpenBracket: DontAlign
+BreakBeforeBraces: Allman
+SortIncludes:    false
+BraceWrapping:
+    AfterExternBlock: false

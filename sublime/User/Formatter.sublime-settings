@@ -1,0 +1,47 @@
+// Settings in here override those in 'Formatter/Formatter.sublime-settings'
+
+    {
+      "debug": true,
+      "auto_format": {
+        "config": {
+          "format_on_save": true,
+          "format_on_paste": false
+        },
+        "c++": "clangformat",
+        "json": "clangformat",
+      },
+      "formatters": {
+        "clangformat": {
+          "enable": true,
+          "syntaxes": [
+            "c",
+            "cs",
+            "c++",
+            "objc",
+            "objc++",
+            "js",
+            "tsx",
+            "jsx",
+            "json",
+            "java",
+            "proto",
+            "protodevel",
+            "td",
+            "sv",
+            "svh",
+            "v",
+            "vh",
+            "glsl"
+          ],
+          "config_path": {
+            "default":
+                "${packages}\\User\\formatter.assets\\config\\clang_format_llvm_rc.yaml",
+            "c++":
+                "${packages}\\User\\formatter.assets\\config\\clang_format_allman_rc.yaml",
+            "c":
+                "${packages}\\User\\formatter.assets\\config\\clang_format_allman_rc.yaml",
+          },
+
+        },
+      }
+    }

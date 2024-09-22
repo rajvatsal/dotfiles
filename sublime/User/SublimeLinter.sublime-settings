@@ -1,0 +1,10 @@
+// SublimeLinter Settings - User
+{
+	// "debug": true,
+
+    "linters": {
+        "SublimeLinter-contrib-clang-tidy": {
+            "selector": "source.cpp",
+        },
+    },
+}

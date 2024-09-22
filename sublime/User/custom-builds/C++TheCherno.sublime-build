@@ -1,0 +1,6 @@
+{
+  "shell_cmd": "make && .\\Binaries\\windows-x86_64\\Debug\\App\\App.exe",
+  "shell": true,
+	"working_dir": "${folder}",
+	"file_regex": "^(...*?):([0-9]*):?([0-9]*)",
+}

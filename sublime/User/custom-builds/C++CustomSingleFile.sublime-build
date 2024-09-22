@@ -1,0 +1,12 @@
+{
+  "shell_cmd":
+      "g++ -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -pedantic-errors ${file} -std=c++23 -DDEBUG -O0 -ggdb2 -o ${file_base_name} && \"${file_path}/${file_base_name}\"",
+  "working_dir": "${file_path}",
+  "variants": [
+    {
+      "name": "Release",
+      "shell_cmd":
+          "g++ -std=c++23 -DNDEBUG -O2 ${file} -o ${file_base_name} && \"${file_path}/${file_base_name}\"",
+    },
+  ],
+}

@@ -1,0 +1,1626 @@
+{
+  "contributions": {
+    "settings": [
+      {
+        "schema": {
+          "$id": "sublime://settings/debugger",
+          "definitions": {
+            "type": {
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "Type of configuration.",
+                  "enum": [
+                    "lldb",
+                    "gdb",
+                    "chrome",
+                    "node",
+                    "msedge",
+                    "debugpy",
+                    "python",
+                    "java",
+                    "go",
+                    "php",
+                    "rdbg",
+                    "ruby",
+                    "ruby-debug",
+                    "elixir",
+                    "mix_task",
+                    "lua-local",
+                    "firefox",
+                    "mock",
+                    "sublime",
+                    "emulicious-debugger"
+                  ]
+                }
+              },
+              "required": [
+                "type"
+              ]
+            },
+            "type_installed": {
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "Type of configuration.",
+                  "enum": [
+                    "lldb",
+                    "gdb"
+                  ],
+                  "errorMessage": "This adapter is not installed, install this adapter to get completions"
+                }
+              },
+              "required": [
+                "type"
+              ]
+            },
+            "lldb": {
+              "properties": {
+                "request": {
+                  "type": "string",
+                  "description": "Request type of configuration.",
+                  "enum": [
+                    "launch",
+                    "attach",
+                    "custom"
+                  ]
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of configuration which appears in the launch configuration drop down menu."
+                }
+              },
+              "required": [
+                "type",
+                "name",
+                "request"
+              ]
+            },
+            "lldb.launch": {
+              "properties": {
+                "program": {
+                  "description": "Path to the program to debug.",
+                  "type": "string"
+                },
+                "cargo": {
+                  "description": "Cargo invocation parameters.",
+                  "type": "object",
+                  "properties": {
+                    "args": {
+                      "description": "Cargo command line arguments.",
+                      "type": "array",
+                      "default": []
+                    },
+                    "env": {
+                      "description": "Additional environment variables passed to cargo.",
+                      "type": "object",
+                      "patternProperties": {
+                        ".*": {
+                          "type": "string"
+                        }
+                      },
+                      "default": {}
+                    },
+                    "problemMatcher": {
+                      "description": "Problem matcher(s) to apply to cargo output.",
+                      "type": [
+                        "string",
+                        "array"
+                      ]
+                    },
+                    "filter": {
+                      "description": "Filter applied to compilation artifacts.",
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "args"
+                  ],
+                  "defaultSnippets": [
+                    {
+                      "label": "Library unit tests",
+                      "body": {
+                        "args": [
+                          "test",
+                          "--no-run",
+                          "--lib"
+                        ],
+                        "filter": {
+                          "kind": "lib"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Executable",
+                      "body": {
+                        "args": [
+                          "build",
+                          "--bin=${1:<name>}"
+                        ],
+                        "filter": {
+                          "kind": "bin"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "args": {
+                  "description": "Program arguments.",
+                  "type": [
+                    "array",
+                    "string"
+                  ]
+                },
+                "cwd": {
+                  "description": "Program working directory.",
+                  "type": "string"
+                },
+                "env": {
+                  "description": "Additional environment variables.",
+                  "type": "object",
+                  "patternProperties": {
+                    ".*": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "envFile": {
+                  "description": "File to read the environment variables from.",
+                  "type": "string"
+                },
+                "stdio": {
+                  "description": "Destination for stdio streams: null = send to debugger console or a terminal, \"<path>\" = attach to a file/tty/fifo.",
+                  "type": [
+                    "null",
+                    "string",
+                    "array",
+                    "object"
+                  ],
+                  "default": null
+                },
+                "terminal": {
+                  "description": "Terminal type to use.",
+                  "type": "string",
+                  "enum": [
+                    "integrated",
+                    "external",
+                    "console"
+                  ],
+                  "enumDescriptions": [
+                    "Use integrated terminal in VSCode.",
+                    "Use external terminal window.",
+                    "Use VScode Debug Console for stdout and stderr. Stdin will be unavailable."
+                  ],
+                  "default": "integrated"
+                },
+                "console": {
+                  "description": "Terminal type to use. (This setting is a compatibility alias of 'terminal'.)",
+                  "type": "string",
+                  "enum": [
+                    "integratedTerminal",
+                    "externalTerminal",
+                    "internalConsole"
+                  ],
+                  "enumDescriptions": [
+                    "Use integrated terminal in VSCode.",
+                    "Use external terminal window.",
+                    "Use VScode Debug Console for stdout and stderr. Stdin will be unavailable."
+                  ]
+                },
+                "stopOnEntry": {
+                  "description": "Automatically stop debuggee after launch.",
+                  "type": "boolean",
+                  "default": false
+                },
+                "initCommands": {
+                  "description": "Initialization commands executed upon debugger startup.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "targetCreateCommands": {
+                  "description": "Commands that create the debug target.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "preRunCommands": {
+                  "description": "Commands executed just before the program is launched.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "processCreateCommands": {
+                  "description": "Commands that create the debuggee process.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "postRunCommands": {
+                  "description": "Commands executed just after the program has been launched.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "exitCommands": {
+                  "description": "Commands executed at the end of debugging session.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "expressions": {
+                  "description": "The default evaluator type used for expressions.",
+                  "type": "string",
+                  "enum": [
+                    "simple",
+                    "python",
+                    "native"
+                  ]
+                },
+                "sourceMap": {
+                  "description": "Source path remapping between the build machine and the local machine.  Each item is a pair of remote and local path prefixes.",
+                  "type": "object",
+                  "patternProperties": {
+                    ".*": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "default": {}
+                },
+                "relativePathBase": {
+                  "description": "Base directory used for resolution of relative source paths.  Defaults to \"${workspaceFolder}\".",
+                  "type": "string"
+                },
+                "sourceLanguages": {
+                  "description": "A list of source languages to enable language-specific features for.",
+                  "type": "array",
+                  "default": []
+                },
+                "reverseDebugging": {
+                  "description": "Enable reverse debugging (Requires reverse execution support in the debug server, see User's Manual for details).",
+                  "type": "boolean",
+                  "default": false
+                },
+                "breakpointMode": {
+                  "description": "Specifies how source breakpoints should be set.",
+                  "type": "string",
+                  "enum": [
+                    "path",
+                    "file"
+                  ],
+                  "enumDescriptions": [
+                    "Resolve locations using full source file path.",
+                    "Resolve locations using file name only."
+                  ]
+                },
+                "pre_debug_task": {
+                  "type": "string",
+                  "description": "Name of task to run before debugging starts"
+                },
+                "post_debug_task": {
+                  "type": "string",
+                  "description": "name of task to run after debugging ends"
+                },
+                "osx": {
+                  "$ref": "sublime://settings/debugger#/definitions/lldb.launch",
+                  "description": "MacOS specific configuration attributes"
+                },
+                "windows": {
+                  "$ref": "sublime://settings/debugger#/definitions/lldb.launch",
+                  "description": "Windows specific configuration attributes"
+                },
+                "linux": {
+                  "$ref": "sublime://settings/debugger#/definitions/lldb.launch",
+                  "description": "Linux specific configuration attributes"
+                }
+              },
+              "oneOf": [
+                {
+                  "required": [
+                    "program"
+                  ]
+                },
+                {
+                  "required": [
+                    "cargo"
+                  ]
+                }
+              ],
+              "type": "object"
+            },
+            "lldb.attach": {
+              "properties": {
+                "program": {
+                  "description": "Path to the program to attach to.",
+                  "type": "string"
+                },
+                "pid": {
+                  "description": "Process id to attach to.",
+                  "type": [
+                    "integer",
+                    "string"
+                  ],
+                  "default": "${command:pickMyProcess}"
+                },
+                "stopOnEntry": {
+                  "description": "Automatically stop debuggee after attach.",
+                  "type": "boolean",
+                  "default": false
+                },
+                "waitFor": {
+                  "description": "Wait for the process to launch (MacOS only).",
+                  "type": "boolean",
+                  "default": false
+                },
+                "initCommands": {
+                  "description": "Initialization commands executed upon debugger startup.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "targetCreateCommands": {
+                  "description": "Commands that create the debug target.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "preRunCommands": {
+                  "description": "Commands executed just before the program is launched.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "processCreateCommands": {
+                  "description": "Commands that create the debuggee process.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "postRunCommands": {
+                  "description": "Commands executed just after the program has been launched.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "exitCommands": {
+                  "description": "Commands executed at the end of debugging session.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "expressions": {
+                  "description": "The default evaluator type used for expressions.",
+                  "type": "string",
+                  "enum": [
+                    "simple",
+                    "python",
+                    "native"
+                  ]
+                },
+                "sourceMap": {
+                  "description": "Source path remapping between the build machine and the local machine.  Each item is a pair of remote and local path prefixes.",
+                  "type": "object",
+                  "patternProperties": {
+                    ".*": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "default": {}
+                },
+                "relativePathBase": {
+                  "description": "Base directory used for resolution of relative source paths.  Defaults to \"${workspaceFolder}\".",
+                  "type": "string"
+                },
+                "sourceLanguages": {
+                  "description": "A list of source languages to enable language-specific features for.",
+                  "type": "array",
+                  "default": []
+                },
+                "reverseDebugging": {
+                  "description": "Enable reverse debugging (Requires reverse execution support in the debug server, see User's Manual for details).",
+                  "type": "boolean",
+                  "default": false
+                },
+                "breakpointMode": {
+                  "description": "Specifies how source breakpoints should be set.",
+                  "type": "string",
+                  "enum": [
+                    "path",
+                    "file"
+                  ],
+                  "enumDescriptions": [
+                    "Resolve locations using full source file path.",
+                    "Resolve locations using file name only."
+                  ]
+                },
+                "pre_debug_task": {
+                  "type": "string",
+                  "description": "Name of task to run before debugging starts"
+                },
+                "post_debug_task": {
+                  "type": "string",
+                  "description": "name of task to run after debugging ends"
+                },
+                "osx": {
+                  "$ref": "sublime://settings/debugger#/definitions/lldb.attach",
+                  "description": "MacOS specific configuration attributes"
+                },
+                "windows": {
+                  "$ref": "sublime://settings/debugger#/definitions/lldb.attach",
+                  "description": "Windows specific configuration attributes"
+                },
+                "linux": {
+                  "$ref": "sublime://settings/debugger#/definitions/lldb.attach",
+                  "description": "Linux specific configuration attributes"
+                }
+              },
+              "type": "object"
+            },
+            "lldb.custom": {
+              "properties": {
+                "initCommands": {
+                  "description": "Initialization commands executed upon debugger startup.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "cargo": {
+                  "description": "Cargo invocation parameters.",
+                  "type": "object",
+                  "properties": {
+                    "args": {
+                      "description": "Cargo command line arguments.",
+                      "type": "array",
+                      "default": []
+                    },
+                    "env": {
+                      "description": "Additional environment variables passed to cargo.",
+                      "type": "object",
+                      "patternProperties": {
+                        ".*": {
+                          "type": "string"
+                        }
+                      },
+                      "default": {}
+                    },
+                    "problemMatcher": {
+                      "description": "Problem matcher(s) to apply to cargo output.",
+                      "type": [
+                        "string",
+                        "array"
+                      ]
+                    },
+                    "filter": {
+                      "description": "Filter applied to compilation artifacts.",
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "args"
+                  ],
+                  "defaultSnippets": [
+                    {
+                      "label": "Library unit tests",
+                      "body": {
+                        "args": [
+                          "test",
+                          "--no-run",
+                          "--lib"
+                        ],
+                        "filter": {
+                          "kind": "lib"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Executable",
+                      "body": {
+                        "args": [
+                          "build",
+                          "--bin=${1:<name>}"
+                        ],
+                        "filter": {
+                          "kind": "bin"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "targetCreateCommands": {
+                  "description": "Commands that create the debug target.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "processCreateCommands": {
+                  "description": "Commands that create the debuggee process.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "exitCommands": {
+                  "description": "Commands executed at the end of debugging session.",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": []
+                },
+                "expressions": {
+                  "description": "The default evaluator type used for expressions.",
+                  "type": "string",
+                  "enum": [
+                    "simple",
+                    "python",
+                    "native"
+                  ]
+                },
+                "sourceMap": {
+                  "description": "Source path remapping between the build machine and the local machine.  Each item is a pair of remote and local path prefixes.",
+                  "type": "object",
+                  "patternProperties": {
+                    ".*": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "default": {}
+                },
+                "relativePathBase": {
+                  "description": "Base directory used for resolution of relative source paths.  Defaults to \"${workspaceFolder}\".",
+                  "type": "string"
+                },
+                "sourceLanguages": {
+                  "description": "A list of source languages to enable language-specific features for.",
+                  "type": "array",
+                  "default": []
+                },
+                "reverseDebugging": {
+                  "description": "Enable reverse debugging (Requires reverse execution support in the debug server, see User's Manual for details).",
+                  "type": "boolean",
+                  "default": false
+                },
+                "breakpointMode": {
+                  "description": "Specifies how source breakpoints should be set.",
+                  "type": "string",
+                  "enum": [
+                    "path",
+                    "file"
+                  ],
+                  "enumDescriptions": [
+                    "Resolve locations using full source file path.",
+                    "Resolve locations using file name only."
+                  ]
+                },
+                "pre_debug_task": {
+                  "type": "string",
+                  "description": "Name of task to run before debugging starts"
+                },
+                "post_debug_task": {
+                  "type": "string",
+                  "description": "name of task to run after debugging ends"
+                },
+                "osx": {
+                  "$ref": "sublime://settings/debugger#/definitions/lldb.custom",
+                  "description": "MacOS specific configuration attributes"
+                },
+                "windows": {
+                  "$ref": "sublime://settings/debugger#/definitions/lldb.custom",
+                  "description": "Windows specific configuration attributes"
+                },
+                "linux": {
+                  "$ref": "sublime://settings/debugger#/definitions/lldb.custom",
+                  "description": "Linux specific configuration attributes"
+                }
+              },
+              "type": "object"
+            },
+            "gdb": {
+              "properties": {
+                "request": {
+                  "type": "string",
+                  "description": "Request type of configuration.",
+                  "enum": [
+                    "launch",
+                    "attach"
+                  ]
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of configuration which appears in the launch configuration drop down menu."
+                }
+              },
+              "required": [
+                "type",
+                "name",
+                "request"
+              ]
+            },
+            "gdb.launch": {
+              "required": [
+                "target",
+                "cwd"
+              ],
+              "properties": {
+                "target": {
+                  "type": "string",
+                  "description": "Path of executable"
+                },
+                "arguments": {
+                  "type": "string",
+                  "description": "Arguments to append after the executable. You can also use pipes."
+                },
+                "terminal": {
+                  "type": "string",
+                  "description": "Leave this field undefined to keep program output in the vscode console at the bottom. If this is set to empty string the program will spawn in a new console using x-terminal-emulator on linux, otherwise with the specified terminal. On windows setting this to an empty string spawns the program in a console, but no other console is supported."
+                },
+                "cwd": {
+                  "type": "string",
+                  "description": "project path"
+                },
+                "gdbpath": {
+                  "type": "string",
+                  "description": "Path to the gdb executable or the command if in PATH",
+                  "default": "gdb"
+                },
+                "env": {
+                  "type": "object",
+                  "description": "Environment overriding the gdb (and in turn also the process) environment",
+                  "default": null
+                },
+                "debugger_args": {
+                  "type": "array",
+                  "description": "Additional arguments to pass to GDB",
+                  "default": []
+                },
+                "pathSubstitutions": {
+                  "type": "object",
+                  "description": "Help GDB find your source using path substitutions (GDB `substitute-path)` variable",
+                  "default": {
+                    "<fromPath>": "<toPath>"
+                  }
+                },
+                "valuesFormatting": {
+                  "type": "string",
+                  "description": "Set the way of showing variable values. 'disabled' - show value as is, 'parseText' - parse debuggers output text into structure, 'prettyPrinters' - enable debuggers custom pretty-printers if there are any",
+                  "default": "parseText",
+                  "enum": [
+                    "disabled",
+                    "parseText",
+                    "prettyPrinters"
+                  ]
+                },
+                "printCalls": {
+                  "type": "boolean",
+                  "description": "Prints all GDB calls to the console",
+                  "default": false
+                },
+                "showDevDebugOutput": {
+                  "type": "boolean",
+                  "description": "Prints all GDB responses to the console",
+                  "default": false
+                },
+                "autorun": {
+                  "type": "array",
+                  "description": "GDB commands to run when starting to debug",
+                  "default": []
+                },
+                "stopAtEntry": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Whether debugger should stop at application entry point",
+                  "default": false
+                },
+                "ssh": {
+                  "required": [
+                    "host",
+                    "user",
+                    "cwd"
+                  ],
+                  "type": "object",
+                  "description": "If this is set then the extension will connect to an ssh host and run GDB there",
+                  "properties": {
+                    "host": {
+                      "type": "string",
+                      "description": "Remote host name/ip to connect to"
+                    },
+                    "port": {
+                      "type": [
+                        "number",
+                        "string"
+                      ],
+                      "description": "Remote port number",
+                      "default": 22
+                    },
+                    "user": {
+                      "type": "string",
+                      "description": "Username to connect as"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "Plain text password (unsafe; if possible use keyfile instead)"
+                    },
+                    "keyfile": {
+                      "type": "string",
+                      "description": "Absolute path to private key"
+                    },
+                    "useAgent": {
+                      "type": "boolean",
+                      "description": "Auto-detect the running SSH agent (via SSH_AUTH_SOCK environment variable) and use it to perform authentication",
+                      "default": false
+                    },
+                    "sourceFileMap": {
+                      "type": "object",
+                      "description": "Mapping of source paths (from GDB on ssh remote) to local (IDE) paths.",
+                      "default": {
+                        "<sourcePath>": "<localPath>"
+                      }
+                    },
+                    "cwd": {
+                      "type": "string",
+                      "description": "Working directory for the debugger.\nIf `ssh.sourceFileMap` is not set, then this is also the project path on the remote for mapping with `cwd`."
+                    },
+                    "forwardX11": {
+                      "type": "boolean",
+                      "description": "If true, the server will redirect x11 to the local host",
+                      "default": true
+                    },
+                    "x11port": {
+                      "type": [
+                        "number",
+                        "string"
+                      ],
+                      "description": "Port to redirect X11 data to (by default port = display + 6000)",
+                      "default": 6000
+                    },
+                    "x11host": {
+                      "type": "string",
+                      "description": "Hostname/ip to redirect X11 data to",
+                      "default": "localhost"
+                    },
+                    "remotex11screen": {
+                      "type": "number",
+                      "description": "Screen to start the application on the remote side",
+                      "default": 0
+                    },
+                    "bootstrap": {
+                      "type": "string",
+                      "description": "Content will be executed on the SSH host before the debugger call."
+                    }
+                  }
+                },
+                "pre_debug_task": {
+                  "type": "string",
+                  "description": "Name of task to run before debugging starts"
+                },
+                "post_debug_task": {
+                  "type": "string",
+                  "description": "name of task to run after debugging ends"
+                },
+                "osx": {
+                  "$ref": "sublime://settings/debugger#/definitions/gdb.launch",
+                  "description": "MacOS specific configuration attributes"
+                },
+                "windows": {
+                  "$ref": "sublime://settings/debugger#/definitions/gdb.launch",
+                  "description": "Windows specific configuration attributes"
+                },
+                "linux": {
+                  "$ref": "sublime://settings/debugger#/definitions/gdb.launch",
+                  "description": "Linux specific configuration attributes"
+                }
+              },
+              "type": "object"
+            },
+            "gdb.attach": {
+              "required": [
+                "target",
+                "cwd"
+              ],
+              "properties": {
+                "target": {
+                  "type": "string",
+                  "description": "PID of running program or program name or connection arguments (eg :2345) if remote is true"
+                },
+                "remote": {
+                  "type": "boolean",
+                  "description": "If true this will connect to a gdbserver instead of attaching to a PID",
+                  "default": false
+                },
+                "valuesFormatting": {
+                  "type": "string",
+                  "description": "Set the way of showing variable values. 'disabled' - show value as is, 'parseText' - parse debuggers output text into structure, 'prettyPrinters' - enable debuggers custom pretty-printers if there are any",
+                  "default": "parseText",
+                  "enum": [
+                    "disabled",
+                    "parseText",
+                    "prettyPrinters"
+                  ]
+                },
+                "printCalls": {
+                  "type": "boolean",
+                  "description": "Prints all GDB calls to the console",
+                  "default": false
+                },
+                "showDevDebugOutput": {
+                  "type": "boolean",
+                  "description": "Prints all GDB responses to the console",
+                  "default": false
+                },
+                "executable": {
+                  "type": "string",
+                  "description": "Path of executable for debugging symbols"
+                },
+                "gdbpath": {
+                  "type": "string",
+                  "description": "Path to the gdb executable or the command if in PATH",
+                  "default": "gdb"
+                },
+                "env": {
+                  "type": "object",
+                  "description": "Environment overriding the gdb (and in turn also the process) environment",
+                  "default": null
+                },
+                "debugger_args": {
+                  "type": "array",
+                  "description": "Additional arguments to pass to GDB",
+                  "default": []
+                },
+                "pathSubstitutions": {
+                  "type": "object",
+                  "description": "Help GDB find your source using path substitutions (GDB `substitute-path)` variable",
+                  "default": {
+                    "<fromPath>": "<toPath>"
+                  }
+                },
+                "cwd": {
+                  "type": "string",
+                  "description": "project path",
+                  "default": "${workspaceRoot}"
+                },
+                "autorun": {
+                  "type": "array",
+                  "description": "GDB commands to run when starting to debug",
+                  "default": []
+                },
+                "stopAtConnect": {
+                  "type": "boolean",
+                  "description": "Whether debugger should stop after connecting to target",
+                  "default": false
+                },
+                "stopAtEntry": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Whether debugger should stop at application entry point",
+                  "default": false
+                },
+                "ssh": {
+                  "required": [
+                    "host",
+                    "cwd",
+                    "user"
+                  ],
+                  "type": "object",
+                  "description": "If this is set then the extension will connect to an ssh host and run GDB there",
+                  "properties": {
+                    "host": {
+                      "type": "string",
+                      "description": "Remote host name/ip to connect to"
+                    },
+                    "port": {
+                      "type": [
+                        "number",
+                        "string"
+                      ],
+                      "description": "Remote port number",
+                      "default": 22
+                    },
+                    "user": {
+                      "type": "string",
+                      "description": "Username to connect as"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "Plain text password (unsafe; if possible use keyfile instead)"
+                    },
+                    "keyfile": {
+                      "type": "string",
+                      "description": "Absolute path to private key"
+                    },
+                    "useAgent": {
+                      "type": "boolean",
+                      "description": "Auto-detect the running SSH agent (via SSH_AUTH_SOCK environment variable) and use it to perform authentication",
+                      "default": false
+                    },
+                    "sourceFileMap": {
+                      "type": "object",
+                      "description": "Mapping of source paths (from GDB on ssh remote) to local (IDE) paths.",
+                      "default": {
+                        "<sourcePath>": "<localPath>"
+                      }
+                    },
+                    "cwd": {
+                      "type": "string",
+                      "description": "Working directory for the debugger.\nIf `ssh.sourceFileMap` is not set, then this is also the project path on the remote for mapping with `cwd`."
+                    },
+                    "forwardX11": {
+                      "type": "boolean",
+                      "description": "If true, the server will redirect x11 to the local host",
+                      "default": true
+                    },
+                    "x11port": {
+                      "type": [
+                        "number",
+                        "string"
+                      ],
+                      "description": "Port to redirect X11 data to (by default port = display + 6000)",
+                      "default": 6000
+                    },
+                    "x11host": {
+                      "type": "string",
+                      "description": "Hostname/ip to redirect X11 data to",
+                      "default": "localhost"
+                    },
+                    "remotex11screen": {
+                      "type": "number",
+                      "description": "Screen to start the application on the remote side",
+                      "default": 0
+                    },
+                    "bootstrap": {
+                      "type": "string",
+                      "description": "Content will be executed on the SSH host before the debugger call."
+                    }
+                  }
+                },
+                "pre_debug_task": {
+                  "type": "string",
+                  "description": "Name of task to run before debugging starts"
+                },
+                "post_debug_task": {
+                  "type": "string",
+                  "description": "name of task to run after debugging ends"
+                },
+                "osx": {
+                  "$ref": "sublime://settings/debugger#/definitions/gdb.attach",
+                  "description": "MacOS specific configuration attributes"
+                },
+                "windows": {
+                  "$ref": "sublime://settings/debugger#/definitions/gdb.attach",
+                  "description": "Windows specific configuration attributes"
+                },
+                "linux": {
+                  "$ref": "sublime://settings/debugger#/definitions/gdb.attach",
+                  "description": "Linux specific configuration attributes"
+                }
+              },
+              "type": "object"
+            },
+            "debugger_configuration": {
+              "defaultSnippets": [
+                {
+                  "label": "CodeLLDB: Launch",
+                  "description": "Launch a new instance of the specified program.",
+                  "body": {
+                    "type": "lldb",
+                    "request": "launch",
+                    "name": "${2:Launch}",
+                    "program": "^\"\\${workspaceFolder}/${1:<program>}\"",
+                    "args": [],
+                    "cwd": "^\"\\${workspaceFolder}\""
+                  }
+                },
+                {
+                  "label": "CodeLLDB: Attach to PID",
+                  "description": "Attach to a running process with the specified process id.",
+                  "body": {
+                    "type": "lldb",
+                    "request": "attach",
+                    "name": "${2:Attach}",
+                    "pid": "^\"\\${command:pickMyProcess}\" // use \\${command:pickProcess} to pick other users' processes"
+                  }
+                },
+                {
+                  "label": "CodeLLDB: Attach by Name",
+                  "description": "Attach to a running instance of the specified program.",
+                  "body": {
+                    "type": "lldb",
+                    "request": "attach",
+                    "name": "${2:Attach}",
+                    "program": "^\"\\${workspaceFolder}/${1:<program>}\""
+                  }
+                },
+                {
+                  "label": "CodeLLDB: Custom",
+                  "description": "Launch or attach using raw LLDB commands.",
+                  "body": {
+                    "type": "lldb",
+                    "request": "custom",
+                    "name": "${2:Custom launch}",
+                    "targetCreateCommands": [
+                      "^\"target create \\${workspaceFolder}/${1:<program>}\""
+                    ],
+                    "processCreateCommands": [
+                      "settings set target.run-args ${3:value1 value2 value3}",
+                      "process launch"
+                    ]
+                  }
+                },
+                {
+                  "label": "CodeLLDB: Debug a Cargo Target",
+                  "description": "Debug an executable target in a Cargo package.",
+                  "body": {
+                    "type": "lldb",
+                    "request": "launch",
+                    "name": "${2:Cargo launch}",
+                    "cargo": {
+                      "args": [
+                        "build",
+                        "${1:--lib}"
+                      ]
+                    },
+                    "args": []
+                  }
+                },
+                {
+                  "label": "CodeLLDB: Debug Cargo Tests",
+                  "description": "Debug unit tests in a Cargo package.",
+                  "body": {
+                    "type": "lldb",
+                    "request": "launch",
+                    "name": "${2:Cargo test}",
+                    "cargo": {
+                      "args": [
+                        "test",
+                        "--no-run",
+                        "${1:--lib}"
+                      ]
+                    },
+                    "args": []
+                  }
+                },
+                {
+                  "label": "GDB: Launch Program",
+                  "description": "Starts the program using gdb",
+                  "body": {
+                    "type": "gdb",
+                    "request": "launch",
+                    "name": "${2:Launch Program}",
+                    "target": "${1:./bin/executable}",
+                    "cwd": "^\"\\${workspaceRoot}\"",
+                    "valuesFormatting": "parseText"
+                  }
+                },
+                {
+                  "label": "GDB: Attach to PID",
+                  "description": "Attaches to a running program pid using gdb",
+                  "body": {
+                    "type": "gdb",
+                    "request": "attach",
+                    "name": "${2:Attach to PID}",
+                    "target": "${1:[PID]}",
+                    "cwd": "^\"\\${workspaceRoot}\"",
+                    "valuesFormatting": "parseText"
+                  }
+                },
+                {
+                  "label": "GDB: Connect to gdbserver",
+                  "description": "Connects to a gdbserver for debugging",
+                  "body": {
+                    "type": "gdb",
+                    "request": "attach",
+                    "name": "${3:Attach to gdbserver}",
+                    "executable": "${1:./bin/executable}",
+                    "target": ":${2:2345}",
+                    "remote": true,
+                    "cwd": "^\"\\${workspaceRoot}\"",
+                    "valuesFormatting": "parseText"
+                  }
+                },
+                {
+                  "label": "GDB: Launch over SSH",
+                  "description": "Remotely starts the program using gdb",
+                  "body": {
+                    "type": "gdb",
+                    "request": "launch",
+                    "name": "${6:Launch Program (SSH)}",
+                    "target": "${1:./bin/executable}",
+                    "cwd": "^\"\\${workspaceRoot}\"",
+                    "ssh": {
+                      "host": "${2:127.0.0.1}",
+                      "cwd": "${3:/tmp/working}",
+                      "keyfile": "${4:/home/my_user/.ssh/id_rsa}",
+                      "user": "${5:remote_user}",
+                      "sourceFileMap": {
+                        "${6:/home/remote_user/project/}": "^\"\\${workspaceRoot}\""
+                      }
+                    },
+                    "valuesFormatting": "parseText"
+                  }
+                },
+                {
+                  "label": "GDB: Launch GUI over SSH with X11 forwarding",
+                  "description": "Remotely starts the program using gdb with X11 forwarding",
+                  "body": {
+                    "type": "gdb",
+                    "request": "launch",
+                    "name": "${6:Launch Program (SSH + X11)}",
+                    "target": "${1:./bin/executable}",
+                    "cwd": "^\"\\${workspaceRoot}\"",
+                    "ssh": {
+                      "host": "${2:127.0.0.1}",
+                      "cwd": "${3:/home/remote_user/project/}",
+                      "keyfile": "${4:/home/my_user/.ssh/id_rsa}",
+                      "user": "${5:remote_user}",
+                      "forwardX11": true,
+                      "x11host": "localhost",
+                      "x11port": 6000
+                    },
+                    "valuesFormatting": "parseText"
+                  }
+                },
+                {
+                  "label": "GDB: Debug external embedded device",
+                  "description": "Debugs an embedded microcontroller supported by GDB by attaching over extended-remote",
+                  "body": {
+                    "type": "gdb",
+                    "request": "attach",
+                    "name": "${6:Debug Microcontroller}",
+                    "target": "extended-remote ${2:/dev/cu.usbmodem00000000}",
+                    "executable": "${1:./bin/executable.elf}",
+                    "cwd": "^\"\\${workspaceRoot}\"",
+                    "autorun": [
+                      "monitor tpwr enable",
+                      "monitor swdp_scan",
+                      "attach 1",
+                      "load ${1:./bin/executable.elf}"
+                    ]
+                  },
+                  "valuesFormatting": "parseText"
+                }
+              ],
+              "allOf": [
+                {
+                  "if": {
+                    "$ref": "sublime://settings/debugger#/definitions/type"
+                  },
+                  "then": {
+                    "$ref": "sublime://settings/debugger#/definitions/type_installed"
+                  },
+                  "else": {
+                    "$ref": "sublime://settings/debugger#/definitions/type"
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "type": {
+                        "const": "lldb"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ]
+                  },
+                  "then": {
+                    "$ref": "sublime://settings/debugger#/definitions/lldb"
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "type": {
+                        "const": "lldb"
+                      },
+                      "request": {
+                        "const": "launch"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "type",
+                      "request"
+                    ]
+                  },
+                  "then": {
+                    "unevaluatedProperties": false,
+                    "allOf": [
+                      {
+                        "$ref": "sublime://settings/debugger#/definitions/type"
+                      },
+                      {
+                        "$ref": "sublime://settings/debugger#/definitions/lldb"
+                      },
+                      {
+                        "$ref": "sublime://settings/debugger#/definitions/lldb.launch"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "type": {
+                        "const": "lldb"
+                      },
+                      "request": {
+                        "const": "attach"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "type",
+                      "request"
+                    ]
+                  },
+                  "then": {
+                    "unevaluatedProperties": false,
+                    "allOf": [
+                      {
+                        "$ref": "sublime://settings/debugger#/definitions/type"
+                      },
+                      {
+                        "$ref": "sublime://settings/debugger#/definitions/lldb"
+                      },
+                      {
+                        "$ref": "sublime://settings/debugger#/definitions/lldb.attach"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "type": {
+                        "const": "lldb"
+                      },
+                      "request": {
+                        "const": "custom"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "type",
+                      "request"
+                    ]
+                  },
+                  "then": {
+                    "unevaluatedProperties": false,
+                    "allOf": [
+                      {
+                        "$ref": "sublime://settings/debugger#/definitions/type"
+                      },
+                      {
+                        "$ref": "sublime://settings/debugger#/definitions/lldb"
+                      },
+                      {
+                        "$ref": "sublime://settings/debugger#/definitions/lldb.custom"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "type": {
+                        "const": "gdb"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ]
+                  },
+                  "then": {
+                    "$ref": "sublime://settings/debugger#/definitions/gdb"
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "type": {
+                        "const": "gdb"
+                      },
+                      "request": {
+                        "const": "launch"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "type",
+                      "request"
+                    ]
+                  },
+                  "then": {
+                    "unevaluatedProperties": false,
+                    "allOf": [
+                      {
+                        "$ref": "sublime://settings/debugger#/definitions/type"
+                      },
+                      {
+                        "$ref": "sublime://settings/debugger#/definitions/gdb"
+                      },
+                      {
+                        "$ref": "sublime://settings/debugger#/definitions/gdb.launch"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "type": {
+                        "const": "gdb"
+                      },
+                      "request": {
+                        "const": "attach"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "type",
+                      "request"
+                    ]
+                  },
+                  "then": {
+                    "unevaluatedProperties": false,
+                    "allOf": [
+                      {
+                        "$ref": "sublime://settings/debugger#/definitions/type"
+                      },
+                      {
+                        "$ref": "sublime://settings/debugger#/definitions/gdb"
+                      },
+                      {
+                        "$ref": "sublime://settings/debugger#/definitions/gdb.attach"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "debugger_compound": {
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of compound which appears in the launch configuration drop down menu."
+                },
+                "configurations": {
+                  "type": "array",
+                  "description": "Names of configurations that compose this compound configuration",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "name",
+                "configurations"
+              ]
+            },
+            "debugger_task": {
+              "allOf": [
+                {
+                  "$ref": "sublime://schemas/sublime-build"
+                },
+                {
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of task"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "file_patterns": [
+          "/*.sublime-project"
+        ],
+        "schema": {
+          "properties": {
+            "debugger_configurations": {
+              "description": "Debugger Configurations",
+              "type": "array",
+              "items": {
+                "$ref": "sublime://settings/debugger#/definitions/debugger_configuration"
+              }
+            },
+            "debugger_tasks": {
+              "description": "Debugger Tasks",
+              "type": "array",
+              "items": {
+                "$ref": "sublime://settings/debugger#/definitions/debugger_task"
+              }
+            },
+            "debugger_compounds": {
+              "description": "Debugger Compounds",
+              "type": "array",
+              "items": {
+                "$ref": "sublime://settings/debugger#/definitions/debugger_compound"
+              }
+            }
+          }
+        }
+      },
+      {
+        "file_patterns": [
+          "Debugger.sublime-settings"
+        ],
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "open_at_startup": {
+              "type": "boolean",
+              "description": "Open the debugger automatically when a project that is set up for debugging"
+            },
+            "always_keep_visible": {
+              "type": "boolean",
+              "description": "Always keep the debugger panel visible"
+            },
+            "font_size": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "description": "Change the font size of the debugger ui. Defaults to the font size in your preferences."
+            },
+            "internal_font_scale": {
+              "type": "number",
+              "description": "Expected values of around 0.95 to 1.05. Only change this if the text/images/content are not aligning correctly within the panels (could cause the last panel to be clipped)."
+            },
+            "internal_width_modifier": {
+              "type": "number",
+              "description": "Expected values of around 0 to -5. Only change this if the size of the panels is too large and the last panel is cropped off (adjust internal_font_scale first if text/images/content are not aligned correctly). Negative values make the panels smaller. Postive make them bigger."
+            },
+            "external_terminal": {
+              "type": "string",
+              "description": "Which external terminal should be used when an adapter requests an external terminal"
+            },
+            "minimum_console_height": {
+              "type": "number",
+              "description": "Controls the minimum height of the debugger output panels in lines"
+            },
+            "development": {
+              "type": "boolean",
+              "description": "Additional console logs and some new features are locked behind this flag"
+            },
+            "node": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Sets a specific path for node if not set adapters that require node to run will use whatever is in your path"
+            },
+            "integrated_output_panels": {
+              "type": [
+                "object",
+                "array"
+              ],
+              "description": "Output panels outside of the debugger can be integrated into the tabbed debugger interface (note: In some cases output panels may cause issues and not work correctly depending on who owns them)"
+            },
+            "installed_packages": {
+              "type": [
+                "object",
+                "array"
+              ],
+              "description": "Some debug adapters require certain packages to be installed via package control. If you have installed these package outside of package control then you can add them to this list and they will be treated as if they are installed."
+            },
+            "global_debugger_configurations": {
+              "type": "array",
+              "items": {
+                "$ref": "sublime://settings/debugger#/definitions/debugger_configuration"
+              },
+              "description": "Global debugger configurations that are accessible from every project"
+            },
+            "global_debugger_tasks": {
+              "type": "array",
+              "items": {
+                "$ref": "sublime://settings/debugger#/definitions/debugger_task"
+              },
+              "description": "Global debugger tasks that are accessible from every project"
+            },
+            "global_debugger_compounds": {
+              "type": "array",
+              "items": {
+                "$ref": "sublime://settings/debugger#/definitions/debugger_compound"
+              },
+              "description": "Global debugger compounds that are accessible from every project"
+            },
+            "github_personal_access_token": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Personal access token used for github api requests. If you are testing installing adapters you may need to set this to have higher api limits if you are getting 429 errors."
+            },
+            "lldb_display_format": {
+              "type": "string",
+              "description": ""
+            },
+            "lldb_dereference_pointers": {
+              "type": "boolean",
+              "description": ""
+            },
+            "lldb_library": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Which lldb library to use"
+            },
+            "go_dlv": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Sets a specific path for dlv if not set go will use whatever is in your path"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

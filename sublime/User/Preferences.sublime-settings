@@ -1,0 +1,22 @@
+// Settings in here override those in "Default/Preferences.sublime-settings",
+// and are overridden in turn by syntax-specific settings.
+{
+	"font_face": "FantasqueSansM Nerd Font Mono",
+	"detect_indentation": true,
+	"tab_size": 2,
+	"ignored_packages": [
+	],
+	"vintage_ctrl_keys": true,
+	"relative_line_numbers": true,
+	"vintage_start_in_command_mode": true,
+	"vintage_use_clipboard": true,
+	"color_scheme": "Packages/Materialize/schemes/Material Augmented Reaction.tmTheme",
+	"theme": "Adaptive.sublime-theme",
+	"font_size": 11,
+
+	"save_on_focus_lost": true,
+	"highlight_line": true,
+	"trim_trailing_white_space_on_save": true,
+	"index_files": true,
+	"console_max_history_lines": 3000,
+}
