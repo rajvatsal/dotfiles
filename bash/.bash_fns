@@ -1,5 +1,7 @@
 #!bash
+# This file contains functions for bash
 
+# Get bash color value from it's hex value
 function fromhex() {
   hex=$1
   if [[ $hex == "#"* ]]; then
@@ -9,4 +11,9 @@ function fromhex() {
   g=$(printf '0x%0.2s' ${hex#??})
   b=$(printf '0x%0.2s' ${hex#????})
   echo -e `printf "%03d" "$(((r<75?0:(r-35)/40)*6*6+(g<75?0:(g-35)/40)*6+(b<75?0:(b-35)/40)+16))"`
+}
+
+# Smart resize usimg imagemagick
+function smartresize() { # you can set -dither None
+magick mogrify -path $3 -filter Triangle -define filter:support=2 -thumbnail $1 -unsharp 0.25x0.08+8.3+0.045  -posterize 136  -quality $5 -format $4 -define jpeg:fancy-upsampling=off -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -interlace none -colorspace sRGB $2
 }
