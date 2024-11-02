@@ -13,7 +13,45 @@ function fromhex() {
   echo -e `printf "%03d" "$(((r<75?0:(r-35)/40)*6*6+(g<75?0:(g-35)/40)*6+(b<75?0:(b-35)/40)+16))"`
 }
 
-# Smart resize usimg imagemagick
+# Smartly resize images using imagemagick
 function smartresize() { # you can set -dither None
-magick mogrify -path $3 -filter Triangle -define filter:support=2 -thumbnail $1 -unsharp 0.25x0.08+8.3+0.045  -posterize 136  -quality $5 -format $4 -define jpeg:fancy-upsampling=off -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -interlace none -colorspace sRGB $2
+magick mogrify -path "$3" \
+    -filter Triangle -define filter:support=2 \
+    -thumbnail "$1" \
+    -unsharp 0.25x0.08+8.3+0.045 \
+    -posterize 136 \
+    -colorspace sRGB \
+    -interlace none \
+    -define jpeg:fancy-upsampling=off \
+    -define png:compression-filter=5 \
+    -define png:compression-level=9 \
+    -define png:compression-strategy=1 \
+    -define png:exclude-chunk=all \
+    -format "$4" \
+    -quality $5 \
+    "$2"
+}
+
+# Creates 4 directories (4000x, 1900x, 1200x, 600x) with respective resolutions
+function webImageGenerator() {
+  res=('4000x' '1920x' '1280x' '600x')
+  path=${1%/*}/
+
+  for size in ${res[@]}; do
+    if ! [ -d "$path$size" ]; then
+      mkdir "$path$size"
+    fi
+
+    magick mogrify \
+      -path "$path$size" \
+      -resize "$size>" \
+      -strip \
+      -colorspace sRGB \
+      -depth 8 \
+      -colors 100 \
+      -quality 50 \
+      -define webp:method=6 \
+      -format 'webp' \
+      $1
+  done
 }
