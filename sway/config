@@ -227,6 +227,13 @@ bindsym $mod+r mode "resize"
 #
     bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
+
+#
+# Notification:
+#
+    bindsym XF86NotificationCenter exec makoctl mode -t do-not-disturb && notify-send --urgency=normal --expire-time=1000 "Notification Mode Toggle" "Mode: $$(makoctl mode | tail -n 1 | tr [:lower:] [:upper:])"
+
+
 exec mako
 exec /usr/local/bin/battery.sh
 
