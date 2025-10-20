@@ -209,6 +209,27 @@ bindsym $mod+r mode "resize"
     bindsym --release Print+w exec "wl-copy < $$(grimshot save window $(screenshot_out))"
     bindsym --release Print+a exec "wl-copy < $$(grimshot save active $(screenshot_out))"
 
+#
+# Volume:
+#
+    bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+
+#
+# Brightness:
+#
+    bindsym XF86MonBrightnessUp exec light -A 5
+    bindsym XF86MonBrightnessDown exec light -U 5
+
+#
+# Microphone:
+#
+    bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+exec mako
+exec /usr/local/bin/battery.sh
+
 # Include configs from 3 locations:
 #  - $DATADIR/sway/config.d
 #  - $SYSCONFDIR/sway/config.d
