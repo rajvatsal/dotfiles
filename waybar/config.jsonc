@@ -44,12 +44,12 @@
         "format-alt": "{icon}",
         "format-alt-click": "click-right",
         "format-icons": {
-            "wifi": ["", "" ,""],
+            "wifi": ["󰤟", "󰤢" ,"󰤥", "󰤨"],
             "ethernet": ["󰈁"],
-            "disconnected": ["󰖪"]
+            "disconnected": ["󰤭"]
         },
         // "on-click": "termite -e nmtui",
-    "tooltip": false
+	"tooltip": false
     },
     "pulseaudio": {
         "format": "{volume} {icon}",
