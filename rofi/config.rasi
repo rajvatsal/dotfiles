@@ -1,0 +1,5 @@
+configuration {
+  font: "IosevkaNerdFont 12";
+}
+
+@theme "black-and-green"
