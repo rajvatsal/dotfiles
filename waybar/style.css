@@ -1,22 +1,29 @@
+/* #cc3300  (204,51,0)     red */
+/* #ff9966  (255,153,102)  light red */
+/* #ffcc00  (255,204,0)    yellow */
+/* #99cc33  (153,204,51)   light green */
+/* #339900  (51,153,0)     green */
+
 * {
-  border: none;
+  border: 0;
+  outline: 0;
   border-radius: 0;
   font-family: "IosevkaNerdFont";
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
   box-shadow: none;
   text-shadow: none;
-  transition-duration: 0s;
+  transition-duration: 100ms;
 }
 
 window {
-  color: rgba(217, 216, 216, 1);
-  background: rgba(35, 31, 32, 1);
+  color: grey;
+  background: black;
 }
 
 window#waybar.solo {
   color: rgba(217, 216, 216, 1);
-  background: rgba(35, 31, 32, 0.5);
+  background: rgba(35, 31, 32, 0.85);
 }
 
 #workspaces {
@@ -32,64 +39,60 @@ window#waybar.solo {
   color: rgba(217, 216, 216, 1);
 }
 
-#workspaces button.focused {
-  border-top: 3px solid rgba(217, 216, 216, 1);
-  border-bottom: 3px solid rgba(217, 216, 216, 0);
-}
+/* #workspaces button.focused { */
+/*   border-top: 3px solid rgba(217, 216, 216, 1); */
+/* } */
 
 #workspaces button.urgent {
   color: rgba(238, 46, 36, 1);
 }
 
-#mode,
-#battery,
-#network,
-#idle_inhibitor {
-  margin: 0px 0px 0px 10px;
-  min-width: 25px;
-}
-
-#cpu {
-  margin-right: 15px;
-}
-
-#memory {
-  margin-right: 15px;
-}
-
-#pulseaudio,
-#battery,
-#backlight {
-  margin: 0px 10px;
-}
-
 #battery {
-  margin: 0px 6px 0px 6px;
-  color: #d17300;
+  margin-left: 5px;
+}
+#battery.charging {
+  color: #99cc33;
+}
+
+#memory,
+#cpu {
+  margin-right: 10px;
+  margin-left: 0;
+}
+
+#pulseaudio {
+  margin-right: 0;
 }
 
 #clock {
-  margin: 0px 16px 0px 0px;
-  min-width: 140px;
+  min-width: 120px;
+  margin: 0 10px 0 20px;
+  font-weight: bold;
 }
 
-#battery.warning {
-  color: rgba(255, 210, 4, 1);
+#network {
+  padding: 0 0 0 5px;
+  color: #99cc33;
 }
-
-#battery.critical {
-  color: rgba(238, 46, 36, 1);
-}
-
-#battery.charging {
-  color: #13f9ea;
-}
-
-#network.linked,
-#network.wifi {
-  color: #0ffc0f;
-}
-
 #network.disconnected {
   color: #fc3c2a;
+}
+
+#pulseaudio.normal {
+  color: inherit;
+}
+
+#cpu.warning,
+#battery.warning,
+#memory.warning,
+#pulseaudio.warning {
+  color: #ffcc00;
+}
+
+#cpu.critical,
+#battery.critical,
+#memory.critical,
+#pulseaudio,
+#pulseaudio.muted {
+  color: #ff9966;
 }
