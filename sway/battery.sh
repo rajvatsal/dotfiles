@@ -18,15 +18,13 @@ while [[ 0 -eq 0 ]]; do
       sleep 300
     elif [[ ${bat_capacity} -le 30 ]]; then
       notify-send --urgency=normal "Low Charge" "Charge: ${bat_capacity}%"
-      sleep 600
-    elif [[ ${bat_capacity} -le 60 ]]; then
-      notify-send --urgency=low "Charge: ${bat_capacity}%"
-      sleep 1200
+      sleep 300
     else
+      notify-send --urgency=low "Charge: ${bat_capacity}%"
       sleep 600
     fi
-
   else
     sleep 600
   fi
 done
+

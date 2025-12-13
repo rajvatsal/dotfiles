@@ -32,8 +32,8 @@ set $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # Requires: desktop-backgrounds-compat, swaybg, jxl-pixbuf-loader
 # output * bg @BACKGROUND@ fill
-output * bg /usr/local/share/backgrounds/a_rocket_launching_in_the_sky.png fill
-#
+output * bg /usr/local/share/backgrounds/classical-art/man-and-train.jpg fill
+
 # Example configuration:
 #
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
@@ -212,30 +212,46 @@ bindsym $mod+r mode "resize"
 #
 # Volume:
 #
-    bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+    bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Mute: $(pamixer --get-mute | sed 's/true/On/; s/false/Off/')"
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Volume: $(pamixer --get-volume)"
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Volume: $(pamixer --get-volume)"
 
 #
 # Brightness:
 #
-    bindsym XF86MonBrightnessUp exec light -A 5
-    bindsym XF86MonBrightnessDown exec light -U 5
+    bindsym XF86MonBrightnessUp exec light -A 5 && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Brightness: $(light | cut -d . -f 1)"
+    bindsym XF86MonBrightnessDown exec light -U 5 && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Brightness: $(light | cut -d . -f 1)"
 
 #
 # Microphone:
 #
     bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
+exec mako
+exec /usr/local/bin/battery.sh
 
 #
 # Notification:
 #
-    bindsym XF86NotificationCenter exec makoctl mode -t do-not-disturb && notify-send --urgency=normal --expire-time=1000 "Notification Mode Toggle" "Mode: $$(makoctl mode | tail -n 1 | tr [:lower:] [:upper:])"
+    bindsym XF86NotificationCenter exec makoctl mode -t do-not-disturb && notify-send --hint=string:x-canonical-private-synchronous:sys-notify --category=action --urgency=normal "Do not disturb: $(makoctl mode | tail -n 1 | sed 's/default/Off/; s/do-not-disturb/On/')"
 
+#
+# Night light
+# 
+exec gammastep -l 30.294016:78.0599296 -t 6500:3000 -m wayland
 
-exec mako
-exec /usr/local/bin/battery.sh
+#
+# Fix screen share
+#
+exec /usr/libexec/xdg-desktop-portal -r & /usr/libexec/xdg-desktop-portal-wlr
+exec export MOZ_ENABLE_WAYLAND=1
+exec export XDG_CURRENT_DESKTOP=sway
+exec export XDG_SESSION_TYPE=wayland
+
+#
+# Default workspace layout
+#
+workspace_layout tabbed
 
 # Include configs from 3 locations:
 #  - $DATADIR/sway/config.d
