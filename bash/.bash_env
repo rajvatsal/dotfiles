@@ -1,0 +1,4 @@
+# Tsoding inspired prompt
+export PS1="[\u@\e[91m\h\e[39m] \e[2m\w\e[22m\n󰅂\e[0m\e[39m "
+# export XDG_CURRENT_DESKTOP="${XDG_CURRENT_DESKTOP:-sway}"
+# export MOZ_ENABLE_WAYLAND=1

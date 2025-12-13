@@ -1,5 +1,10 @@
 # .bashrc
 
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
 # User specific environment
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
@@ -19,43 +24,31 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
-. "$HOME/.asdf/asdf.sh"
-. "$HOME/.asdf/completions/asdf.bash"
 
-if [ -f ~/.bash_fns ]; then
-. ~/.bash_fns
-fi
+function setbg () {
+  argc=${#@}
+  if [[ ${argc} -lt 1 ]]; then
+    echo "Error: no arguments passed"
+    echo "USAGE: setbg path/to/background/file"
+    return 1
+  fi
 
-if [ -f ~/.bash_aliases ]; then
-. ~/.bash_aliases
-fi
+  file_name=$(echo $1 | rev | cut -d '/' -f 1 | rev)
+  file_path_len=$((${#1}-${#file_name}))
 
-##-----------------------------------------------------
-## synth-shell-greeter.sh
-# if [ -f /home/mel/.config/synth-shell/synth-shell-greeter.sh ] && [ -n "$( echo $- | grep i )" ]; then
-# 	source /home/mel/.config/synth-shell/synth-shell-greeter.sh
-# fi
+  if [[ "$file_path_len" -eq 0 ]]; then
+    abs_path="$(pwd)/${file_name}"
+  else
+    file_path=${1:0:file_path_len}
+    abs_path="$(cd "$file_path" | pwd)/${file_name}"
+  fi
 
-##-----------------------------------------------------
-## synth-shell-prompt.sh
-if [ -f /home/mel/.config/synth-shell/synth-shell-prompt.sh ] && [ -n "$( echo $- | grep i )" ]; then
-	source /home/mel/.config/synth-shell/synth-shell-prompt.sh
-fi
+  if [ -f "$abs_path" ]; then
+    swaymsg 'output' eDP-1 bg $abs_path fill
+  else
+    echo "Error: no such file dude"
+    return 1
+  fi
+}
 
-##-----------------------------------------------------
-## better-ls
-# if [ -f /home/mel/.config/synth-shell/better-ls.sh ] && [ -n "$( echo $- | grep i )" ]; then
-# 	source /home/mel/.config/synth-shell/better-ls.sh
-# fi
-
-##-----------------------------------------------------
-## alias
-if [ -f /home/mel/.config/synth-shell/alias.sh ] && [ -n "$( echo $- | grep i )" ]; then
-	source /home/mel/.config/synth-shell/alias.sh
-fi
-
-##-----------------------------------------------------
-## better-history
-if [ -f /home/mel/.config/synth-shell/better-history.sh ] && [ -n "$( echo $- | grep i )" ]; then
-	source /home/mel/.config/synth-shell/better-history.sh
-fi
+. ~/.bash_env
