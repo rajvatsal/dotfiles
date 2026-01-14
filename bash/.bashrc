@@ -36,19 +36,20 @@ function setbg () {
   file_name=$(echo $1 | rev | cut -d '/' -f 1 | rev)
   file_path_len=$((${#1}-${#file_name}))
 
-  if [[ "$file_path_len" -eq 0 ]]; then
-    abs_path="$(pwd)/${file_name}"
-  else
-    file_path=${1:0:file_path_len}
-    abs_path="$(cd "$file_path" | pwd)/${file_name}"
-  fi
+  file_path=${1:0:file_path_len}
+  abs_path=$(pwd)/${file_path}${file_name}
 
   if [ -f "$abs_path" ]; then
     swaymsg 'output' eDP-1 bg $abs_path fill
   else
     echo "Error: no such file dude"
+    echo "Path: ${abs_path}"
     return 1
   fi
 }
 
 . ~/.bash_env
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
