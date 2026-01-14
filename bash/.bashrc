@@ -25,7 +25,21 @@ fi
 unset rc
 
 
-function setbg () {
+# ▗▄▄▄▖▗▖ ▗▖▗▖  ▗▖ ▗▄▄▖▗▄▄▄▖▗▄▄▄▖ ▗▄▖ ▗▖  ▗▖ ▗▄▄▖
+# ▐▌   ▐▌ ▐▌▐▛▚▖▐▌▐▌     █    █  ▐▌ ▐▌▐▛▚▖▐▌▐▌   
+# ▐▛▀▀▘▐▌ ▐▌▐▌ ▝▜▌▐▌     █    █  ▐▌ ▐▌▐▌ ▝▜▌ ▝▀▚▖
+# ▐▌   ▝▚▄▞▘▐▌  ▐▌▝▚▄▄▖  █  ▗▄█▄▖▝▚▄▞▘▐▌  ▐▌▗▄▄▞▘
+#                                                
+#                                                
+
+# Get absolute path
+function gap () {
+  echo "$(pwd)/${1}"
+  return 0
+}
+
+# Relative swaybg
+function rswaybg () {
   argc=${#@}
   if [[ ${argc} -lt 1 ]]; then
     echo "Error: no arguments passed"
@@ -33,11 +47,7 @@ function setbg () {
     return 1
   fi
 
-  file_name=$(echo $1 | rev | cut -d '/' -f 1 | rev)
-  file_path_len=$((${#1}-${#file_name}))
-
-  file_path=${1:0:file_path_len}
-  abs_path=$(pwd)/${file_path}${file_name}
+  abs_path="$(gap $1)"
 
   if [ -f "$abs_path" ]; then
     swaymsg 'output' eDP-1 bg $abs_path fill
@@ -47,6 +57,14 @@ function setbg () {
     return 1
   fi
 }
+
+
+# ▗▄▄▄▖▗▖  ▗▖▗▖  ▗▖
+# ▐▌   ▐▛▚▖▐▌▐▌  ▐▌
+# ▐▛▀▀▘▐▌ ▝▜▌▐▌  ▐▌
+# ▐▙▄▄▖▐▌  ▐▌ ▝▚▞▘ 
+#                  
+#                  
 
 . ~/.bash_env
 
