@@ -12,18 +12,21 @@
   font-size: 14px;
   font-weight: 500;
   box-shadow: none;
-  text-shadow: none;
+  text-shadow: 0 0 0 black;
   transition-duration: 100ms;
 }
 
 window {
-  color: grey;
-  background: black;
+  background-color: #003153;
+  background-image:
+    linear-gradient(362deg, #003153 0%, #1b1b1b 74%),
+    radial-gradient(transparent 80%, black);
+  background-blend-mode: overlay;
+  color: white;
 }
 
 window#waybar.solo {
-  color: rgba(217, 216, 216, 1);
-  background: rgba(35, 31, 32, 0.85);
+  /* background: rgba(35, 31, 32, 0.85); */
 }
 
 #workspaces {
@@ -31,12 +34,16 @@ window#waybar.solo {
 }
 
 #workspaces button {
-  padding: 0 5px;
+  padding: 0px 5px 2px;
   color: rgba(217, 216, 216, 0.4);
+  border-top: 2px solid;
+  border-color: transparent;
+  transition-duration: 0;
 }
 
 #workspaces button.visible {
   color: rgba(217, 216, 216, 1);
+  border-color: white;
 }
 
 /* #workspaces button.focused { */
@@ -87,6 +94,7 @@ window#waybar.solo {
 #memory.warning,
 #pulseaudio.warning {
   color: #ffcc00;
+  background: transparent;
 }
 
 #cpu.critical,

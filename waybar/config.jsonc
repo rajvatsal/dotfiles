@@ -55,8 +55,8 @@
         "tooltip": false
     },
     "battery": {
-        "format": "{icon}",
-        "format-alt": "{icon}:{capacity}",
+        "format": "{icon}:{capacity}",
+        "format-alt": "{icon}",
         "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
         "format-charging-icons": ["󰂅"],
         "format-charging": "{capacity} {icon}󱐋",
