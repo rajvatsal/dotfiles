@@ -27,12 +27,24 @@ set $rofi_cmd rofi \
 # TODO: add window with the next release of rofi-wayland
 set $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
 
+set $main_display eDP-1
+set $alt_display_1 HDMI-A-1
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # Requires: desktop-backgrounds-compat, swaybg, jxl-pixbuf-loader
 # output * bg @BACKGROUND@ fill
-output * bg /usr/local/share/backgrounds/classical-art/man-and-train.jpg fill
+output * bg /usr/local/share/backgrounds/a_red_object_in_the_sky.jpg fill
+output $main_display {
+  pos 0 0
+  bg /usr/local/share/backgrounds/classical-art/starts-in-blue-sky.jpg fill
+}
+output $alt_display_1 {
+  mode 1920x1080@144Hz
+  pos 1920 0
+  bg /usr/local/share/backgrounds/a_red_object_in_the_sky.jpg fill
+}
 
 # Example configuration:
 #
@@ -138,6 +150,18 @@ input "1267:23:Elan_Touchpad" {
     bindsym $mod+Shift+0 move container to workspace number 10
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
+
+    # Workspaces assigned to display outputs
+    workspace 1 output $main_display
+    workspace 2 output $main_display
+    workspace 3 output $main_display
+    workspace 4 output $main_display
+    workspace 5 output $main_display
+    workspace 6 output $alt_display_1
+    workspace 7 output $alt_display_1
+    workspace 8 output $alt_display_1
+    workspace 9 output $alt_display_1
+    workspace 10 output $alt_display_1
 #
 # Layout stuff:
 #
@@ -244,14 +268,12 @@ exec gammastep -l 30.294016:78.0599296 -t 6500:3000 -m wayland
 # Fix screen share
 #
 exec /usr/libexec/xdg-desktop-portal -r & /usr/libexec/xdg-desktop-portal-wlr
-exec export MOZ_ENABLE_WAYLAND=1
-exec export XDG_CURRENT_DESKTOP=sway
-exec export XDG_SESSION_TYPE=wayland
 
 #
-# Default workspace layout
+# Defaults
 #
 workspace_layout tabbed
+default_border normal 1
 
 # Include configs from 3 locations:
 #  - $DATADIR/sway/config.d
