@@ -1,2 +1,2 @@
-# Prompt visuals inspired from tsoding
-PS1="[\e[39m\u@\e[91m\h\e[39m] \e[2m\w\n\e[22m$ "
+# Tsoding inspired/stolen prompt
+export PS1="[\u\[\e[91m\]@\h\[\e[39m\]] \[\e[2m\]\[\e[22m\]\[\e[0m\]\[\e[39m\]"
