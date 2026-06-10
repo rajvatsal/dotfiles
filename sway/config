@@ -4,6 +4,13 @@
 #
 # Read `man 5 sway` for a complete reference.
 
+#
+# Fix screen share
+#
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
+
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
@@ -35,15 +42,15 @@ set $alt_display_1 HDMI-A-1
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # Requires: desktop-backgrounds-compat, swaybg, jxl-pixbuf-loader
 # output * bg @BACKGROUND@ fill
-output * bg /usr/local/share/backgrounds/a_red_object_in_the_sky.jpg fill
+output * bg /usr/local/share/backgrounds/classical-art/man-and-train.jpg fill
 output $main_display {
-  pos 0 0
-  bg /usr/local/share/backgrounds/classical-art/starts-in-blue-sky.jpg fill
+  pos 1920 0
+  bg /usr/local/share/backgrounds/darth-vader.jpg.jpg fill
 }
 output $alt_display_1 {
   mode 1920x1080@144Hz
-  pos 1920 0
-  bg /usr/local/share/backgrounds/a_red_object_in_the_sky.jpg fill
+  pos 0 0
+  bg /usr/local/share/backgrounds/darth-vader.jpg fill
 }
 
 # Example configuration:
@@ -265,15 +272,12 @@ exec /usr/local/bin/battery.sh
 exec gammastep -l 30.294016:78.0599296 -t 6500:3000 -m wayland
 
 #
-# Fix screen share
-#
-exec /usr/libexec/xdg-desktop-portal -r & /usr/libexec/xdg-desktop-portal-wlr
-
-#
 # Defaults
 #
 workspace_layout tabbed
 default_border normal 1
+# Title bar: light red brd, dark red bg, white txt
+client.focused #770112 #35020a #ffffff
 
 # Include configs from 3 locations:
 #  - $DATADIR/sway/config.d
