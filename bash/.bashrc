@@ -29,8 +29,6 @@ unset rc
 # ▐▌   ▐▌ ▐▌▐▛▚▖▐▌▐▌     █    █  ▐▌ ▐▌▐▛▚▖▐▌▐▌   
 # ▐▛▀▀▘▐▌ ▐▌▐▌ ▝▜▌▐▌     █    █  ▐▌ ▐▌▐▌ ▝▜▌ ▝▀▚▖
 # ▐▌   ▝▚▄▞▘▐▌  ▐▌▝▚▄▄▖  █  ▗▄█▄▖▝▚▄▞▘▐▌  ▐▌▗▄▄▞▘
-#                                                
-#                                                
 
 # Get absolute path
 function gap () {
@@ -39,15 +37,21 @@ function gap () {
 }
 
 # Relative swaybg
+# TODO: Allow ability to add arguments for displays you want to set background for
 function rswaybg () {
   argc=${#@}
   if [[ ${argc} -lt 1 ]]; then
     echo "Error: no arguments passed"
-    echo "USAGE: setbg path/to/background/file"
+    echo "USAGE:S setbg path/to/background/file"
     return 1
   fi
 
-  abs_path="$(gap $1)"
+  first_char="${1:0:1}"
+  if [[ "$first_char" == "/" ]]; then
+    abs_path=$1
+  else
+    abs_path="$(gap $1)"
+  fi
 
   if [ -f "$abs_path" ]; then
     swaymsg 'output' eDP-1 bg $abs_path fill
@@ -63,11 +67,28 @@ function rswaybg () {
 # ▐▌   ▐▛▚▖▐▌▐▌  ▐▌
 # ▐▛▀▀▘▐▌ ▝▜▌▐▌  ▐▌
 # ▐▙▄▄▖▐▌  ▐▌ ▝▚▞▘ 
-#                  
-#                  
 
 . ~/.bash_env
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
+
+# opencode
+export PATH=/home/vatsal/.opencode/bin:$PATH
+
+alias dvm_login=~/repos/work/dataring/scripts/ssh-server
+
+# >>> Claude Code Router CLI >>>
+# Added by Claude Code Router. Enables the ccr-app command in new shells.
+case ":$PATH:" in
+  *":$HOME/.claude-code-router/bin:"*) ;;
+  *) export PATH="$HOME/.claude-code-router/bin:$PATH" ;;
+esac
+# <<< Claude Code Router CLI <<<
+
+# javm
+eval "$(javm init bash)"

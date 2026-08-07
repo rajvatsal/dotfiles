@@ -1,4 +1,4 @@
-font=IosevkaNerdFont
+font=monospace
 default-timeout=4000
 anchor=top-right
 layer=overlay

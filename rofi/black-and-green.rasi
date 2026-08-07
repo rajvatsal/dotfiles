@@ -1,0 +1,70 @@
+* {
+  text-color: #cecece81;
+  primary-color: white;
+  primary-2-color: #cecece;
+  secondary-1-color: #12d608;
+  accent-1-color: #727272;
+  normal-background: #161616;
+  normal-background-alternate: #232323;
+  background-color: inherit;
+}
+
+window {
+  background-color: @normal-background;
+  text-color: @text-color;
+  border-color: transparent;
+  padding: 5;
+}
+
+  mainbox {
+    text-color: inherit;
+    background-color: inherit;
+  }
+
+  inputbar {
+    text-color: @text-color;
+  }
+
+    prompt {
+      text-color: @primary-2-color;
+    }
+
+    entry {
+      text-color: @secondary-1-color;
+    }
+
+  listview {
+    spacing: 0;
+    border: 2 dash 0 0 0;
+    border-color: green;
+    text-color: @text-color;
+  }
+
+    element {
+      padding: 2;
+    }
+
+    element.normal.normal {
+      background-color: @normal-background;
+      text-color: inherit;
+    }
+
+    element.alternate.normal {
+      background-color: @normal-background-alternate;
+      text-color: inherit;
+    }
+
+    element.selected.normal {
+      text-color: @secondary-1-color;
+      background-color: black;
+    }
+
+      element-text {
+       background-color: inherit;
+       text-color: inherit;
+      }
+
+      scrollbar {
+        handle-color: @primary-color;
+      }
+

@@ -45,7 +45,7 @@ set $alt_display_1 HDMI-A-1
 output * bg /usr/local/share/backgrounds/classical-art/man-and-train.jpg fill
 output $main_display {
   pos 1920 0
-  bg /usr/local/share/backgrounds/darth-vader.jpg.jpg fill
+  bg /usr/local/share/backgrounds/darth-vader.jpg fill
 }
 output $alt_display_1 {
   mode 1920x1080@144Hz
@@ -275,9 +275,10 @@ exec gammastep -l 30.294016:78.0599296 -t 6500:3000 -m wayland
 # Defaults
 #
 workspace_layout tabbed
-default_border normal 1
-# Title bar: light red brd, dark red bg, white txt
-client.focused #770112 #35020a #ffffff
+default_border normal 0
+# Title bar:  brd, bg, txt
+set $clr_secondary #000027 
+client.focused $clr_secondary #d8d8ff $clr_secondary
 
 # Include configs from 3 locations:
 #  - $DATADIR/sway/config.d
@@ -301,3 +302,5 @@ client.focused #770112 #35020a #ffffff
 # the trick, it's all in the `wordexp(3)`.
 #
 include '$($LIBEXECDIR/sway/layered-include "$DATADIR/sway/config.d/*.conf" "$SYSCONFDIR/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
+
+
