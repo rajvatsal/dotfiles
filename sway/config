@@ -254,7 +254,7 @@ bindsym $mod+r mode "resize"
 #
 # Brightness:
 #
-    bindsym XF86MonBrightnessUp exec brightnessctl set +5% && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Brightness: $(brightnessctl get -P)"
+    bindsym XF86MonBrightnessUp exec $usr_dir/scripts/raise_brightness.sh && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Brightness: $(brightnessctl get -P)"
     bindsym XF86MonBrightnessDown exec $usr_dir/scripts/lower_brightness.sh 5 && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Brightness: $(brightnessctl get -P)"
 
 #
