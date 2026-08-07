@@ -6,13 +6,7 @@ if [ -f ~/.bashrc ]; then
 fi
 
 # User specific environment and startup programs
-export QT_QPA_PLATFORM=wayland
+export MOZ_ENABLE_WAYLAND=1
 export XDG_CURRENT_DESKTOP=sway
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+export XDG_SESSION_TYPE=wayland
+export QT_QPA_PLATFORM=wayland
