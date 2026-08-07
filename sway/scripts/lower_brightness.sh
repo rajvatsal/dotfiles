@@ -1,3 +1,5 @@
+#!/bin/bash
+
 shift_strength="${1:-5}"
 brightness=$(brightnessctl get -P)
 if [[ "$brightness" -le "$shift_strength" ]]; then
