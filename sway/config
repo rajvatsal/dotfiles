@@ -37,6 +37,9 @@ set $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
 set $main_display eDP-1
 set $alt_display_1 HDMI-A-1
 
+set $usr_dir $HOME/.config/sway
+
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
@@ -231,6 +234,7 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+
 #
 # Screenshot:
 #
@@ -244,14 +248,14 @@ bindsym $mod+r mode "resize"
 # Volume:
 #
     bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Mute: $(pamixer --get-mute | sed 's/true/On/; s/false/Off/')"
-    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Volume: $(pamixer --get-volume)"
+    bindsym XF86AudioRaiseVolume exec $usr_dir/scripts/raise_volume.sh && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Volume: $(pamixer --get-volume)"
     bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Volume: $(pamixer --get-volume)"
 
 #
 # Brightness:
 #
-    bindsym XF86MonBrightnessUp exec light -A 5 && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Brightness: $(light | cut -d . -f 1)"
-    bindsym XF86MonBrightnessDown exec light -U 5 && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Brightness: $(light | cut -d . -f 1)"
+    bindsym XF86MonBrightnessUp exec brightnessctl set +5% && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Brightness: $(brightnessctl get -P)"
+    bindsym XF86MonBrightnessDown exec $usr_dir/scripts/lower_brightness.sh 5 && notify-send -h string:x-canonical-private-synchronous:sys-notify -c action -u normal "Brightness: $(brightnessctl get -P)"
 
 #
 # Microphone:
@@ -302,5 +306,3 @@ client.focused #ffffff #d8d8ff $clr_secondary
 #
 #include '$($LIBEXECDIR/sway/layered-include "$DATADIR/sway/config.d/*.conf" "$SYSCONFDIR/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
 include "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf"
-
-
