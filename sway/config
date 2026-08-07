@@ -258,7 +258,6 @@ bindsym $mod+r mode "resize"
 #
     bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
-exec mako
 exec /usr/local/bin/battery.sh
 
 #
@@ -278,7 +277,7 @@ workspace_layout tabbed
 default_border normal 0
 # Title bar:  brd, bg, txt
 set $clr_secondary #000027 
-client.focused $clr_secondary #d8d8ff $clr_secondary
+client.focused #ffffff #d8d8ff $clr_secondary
 
 # Include configs from 3 locations:
 #  - $DATADIR/sway/config.d
@@ -301,6 +300,7 @@ client.focused $clr_secondary #d8d8ff $clr_secondary
 # important to make the magic work. And if you want to learn the secret behind
 # the trick, it's all in the `wordexp(3)`.
 #
-include '$($LIBEXECDIR/sway/layered-include "$DATADIR/sway/config.d/*.conf" "$SYSCONFDIR/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
+#include '$($LIBEXECDIR/sway/layered-include "$DATADIR/sway/config.d/*.conf" "$SYSCONFDIR/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
+include "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf"
 
 
